@@ -1,0 +1,2 @@
+Dear {{name}},\n
+{{amount}} was {{transaction}} your account {{account_no}} at {{date}}
