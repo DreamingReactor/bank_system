@@ -92,7 +92,7 @@ class GenerateExcel(APIView):
         account_list = request.data['account_list']
         transaction_status_type = request.data['transaction_status_type']
         manager_id = request.user
-        xls_name = 'Trasaction_detail'+'_'+str(int(time.time()))+'_'+str(manager_id)
+        xls_name = 'Trasaction_detail'+'_'+str(int(time.time()))+'_'+str(manager_id)+'.xlsx'
         output = BytesIO()
         work_book = xlsxwriter.Workbook(output)
         for account in account_list:
