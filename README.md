@@ -8,26 +8,28 @@ __OS: Ubuntu 20.04__
 
 ### Run following command in terminal:
 
-* $git clone https://github.com/DreamingReactor/bank_system.git
-* $sudo apt install python3-venv
-* $python3 -m venv project_env_name
-* $source project_env_name/bin/activate
-* $cd bank_system
-* $pip install wheel
-* $pip install -r requirements.txt
+* $ git clone https://github.com/DreamingReactor/bank_system.git
+* $ sudo apt update
+* $ sudo apt install redis-server
+* $ sudo apt install python3-venv
+* $ python3 -m venv project_env_name
+* $ source project_env_name/bin/activate
+* $ cd bank_system
+* $ pip install wheel
+* $ pip install -r requirements.txt
 
 Last command will install required packages in environment. After packages are installed run following command:
 
-* $python manage.py makemigrations
-* $python manage.py migrate
-* $python manage.py createsuperuser.(This will prompt you to enter user details, for creation of super user.)
-* $python manage.py runserver.(Starts up local server at default address http://127.0.0.1:8000)
+* $ python manage.py makemigrations
+* $ python manage.py migrate
+* $ python manage.py createsuperuser.(This will prompt you to enter user details, for creation of super user.)
+* $ python manage.py runserver.(Starts up local server at default address http://127.0.0.1:8000)
 
 Go to http://127.0.0.1:8000/admin on a webbrowser and login with super user credential. This will open up django admin panel, which can be used to enter rows in tables.(Account, Trasaction, User)
 
 Switch back to terminal and use Ctrl+C to exit from running server. In terminal, use following commands to create a user, which will be used for calling Excel Sheet generation API.
 
-    $python manage.py shell
+    $ python manage.py shell
         >>from create_user import create_user
         >>create_user('username', 'password')
 
@@ -37,7 +39,14 @@ __NOTE: To enable email notification, set appropriate email credentials against 
 
 __NOTE: General account password for google won't work if 2-step verification is enabled. App password would've to be generated from account's security settings.__
 
-Start server again. Use any API client, like Postman, to make API requests.
+Start server again. 
+
+Open new terminal tab and enter following command.
+> $ celery -A bank_system worker -l info
+
+This will starts a celery worker, in which Withdraw and Deposit tasks are queued.
+
+Use any API client, like Postman, to make API requests.
 
 ## API Details
 
@@ -124,4 +133,4 @@ __Response:__
 
 ## Further Development
 
-* Setting up task queues to process write APIs.
+* Setting up task queues to process write APIs.(Done)
